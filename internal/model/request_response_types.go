@@ -1,9 +1,9 @@
 package model
 
 type WrapKeyRequest struct {
+	Token    string `json:"token"`
 	Table    string `json:"table"`
 	Column   string `json:"column"`
-	Footer   bool   `json:"footer"`
 	PlainKey string `json:"plain_key"`
 }
 
@@ -14,9 +14,9 @@ type WrapKeyResponse struct {
 }
 
 type UnwrapKeyRequest struct {
+	Token      string `json:"token"`
 	Table      string `json:"table"`
 	Column     string `json:"column"`
-	Footer     bool   `json:"footer"`
 	WrappedKey string `json:"wrapped_key"`
 }
 
