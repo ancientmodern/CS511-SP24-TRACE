@@ -46,14 +46,13 @@ func (h *Handler) WrapKey(c echo.Context) error {
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "internal database error")
 	}
-	if mki == "" {
-		return c.JSON(http.StatusOK, model.WrapKeyResponse{
-			Code:  -1,
-			Error: fmt.Sprintf("table %s has not been registered yet", req.Table),
-		})
-	}
 
-	// TODO
+	// 4. TODO
+	if mki == "" {
+
+	} else {
+
+	}
 
 	resp := &model.WrapKeyResponse{
 		Code:       0,

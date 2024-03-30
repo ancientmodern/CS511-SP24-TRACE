@@ -54,6 +54,36 @@ func (db *PostgresDB) GetMkiFromTableName(tableName string) (string, error) {
 	return mki, nil
 }
 
+func (db *PostgresDB) AddMasterKeyAndTableMapping(wrappedMasterKey, tableName string) error {
+	tx, err := db.pool.Begin(context.Background())
+	if err != nil {
+		return err
+	}
+	// Rollback is safe to call even if the tx is already closed, so if
+	// the tx commits successfully, this is a no-op
+	defer tx.Rollback(context.Background())
+
+	var mki string
+	err = tx.QueryRow(context.Background(),
+		"INSERT INTO master_keys (wrapped_key) VALUES ($1) RETURNING id", wrappedMasterKey).Scan(&mki)
+	if err != nil {
+		return err
+	}
+
+	_, err = tx.Exec(context.Background(),
+		"INSERT INTO master_key_table_mapping (table_name, mki) VALUES ($1, $2)", tableName, mki)
+	if err != nil {
+		return err
+	}
+
+	err = tx.Commit(context.Background())
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (db *PostgresDB) AddMasterKey(mki, wrappedMasterKey string) error {
 	_, err := db.pool.Exec(context.Background(),
 		"INSERT INTO master_keys (id, wrapped_key) VALUES ($1, $2)", mki, wrappedMasterKey)

@@ -10,8 +10,9 @@ type Database interface {
 	Close() error
 	GetWrappedMasterKeyFromMki(mki string) (string, error)
 	GetMkiFromTableName(tableName string) (string, error)
-	AddMasterKey(mki, wrappedMasterKey string) error
-	AddTableMapping(tableName, mki string) error
+	AddMasterKeyAndTableMapping(wrappedMasterKey, tableName string) error
+	//AddMasterKey(mki, wrappedMasterKey string) error
+	//AddTableMapping(tableName, mki string) error
 }
 
 func NewDatabase(url string) (Database, error) {

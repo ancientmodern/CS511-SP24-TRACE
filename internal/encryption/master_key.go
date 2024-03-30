@@ -7,7 +7,7 @@ import (
 )
 
 // WrapMasterKey
-// layout: iv (12 bytes == gcm.NonceSize) + encryptedKey
+// layout: iv (12 bytes == gcm.NonceSize) + encryptedMasterKey
 func WrapMasterKey(masterKey, rootKey []byte) ([]byte, error) {
 	block, err := aes.NewCipher(rootKey)
 	if err != nil {
@@ -32,7 +32,7 @@ func WrapMasterKey(masterKey, rootKey []byte) ([]byte, error) {
 }
 
 // UnwrapMasterKey
-// layout: iv (12 bytes == gcm.NonceSize) + encryptedKey
+// layout: iv (12 bytes == gcm.NonceSize) + encryptedMasterKey
 func UnwrapMasterKey(wrappedMasterKey, rootKey []byte) ([]byte, error) {
 	if len(wrappedMasterKey) < 12 {
 		return nil, fmt.Errorf("wrappedMasterKey is too short")
