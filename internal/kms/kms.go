@@ -1,5 +1,11 @@
 package kms
 
-func GetRootKey() (string, error) {
-	return "sample_root_key", nil
+import "fmt"
+
+func GetRootKey() ([]byte, error) {
+	rootKey := []byte("example_sample_root_key_32_bytes")
+	if len(rootKey) != 32 {
+		return nil, fmt.Errorf("root key size does not equal to 32 bytes")
+	}
+	return rootKey, nil
 }

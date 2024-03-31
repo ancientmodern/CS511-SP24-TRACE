@@ -58,3 +58,7 @@ func UnwrapMasterKey(wrappedMasterKey, rootKey []byte) ([]byte, error) {
 
 	return masterKey, nil
 }
+
+func GenerateNewMasterKey() ([]byte, error) {
+	return generateRandomBytes(32)
+}
