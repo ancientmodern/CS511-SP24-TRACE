@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/ancientmodern/keystore/internal/db"
 	"github.com/ancientmodern/keystore/internal/handler"
+	"github.com/rs/zerolog"
 	"log"
 	"net/http"
 
@@ -10,6 +11,8 @@ import (
 )
 
 func main() {
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+
 	dbURL := "postgres://keystore:123456@localhost:5432/keystore"
 	database, err := db.NewDatabase(dbURL)
 	if err != nil {

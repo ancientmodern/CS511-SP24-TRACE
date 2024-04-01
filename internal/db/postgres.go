@@ -54,7 +54,7 @@ func (db *PostgresDB) GetMkiFromTableName(tableName string) (string, error) {
 	return mki, nil
 }
 
-func (db *PostgresDB) AddMasterKeyAndTableMapping(wrappedMasterKey, tableName string) error {
+func (db *PostgresDB) AddMasterKeyAndTableMappingTx(wrappedMasterKey, tableName string) error {
 	tx, err := db.pool.Begin(context.Background())
 	if err != nil {
 		return err

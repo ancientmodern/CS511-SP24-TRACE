@@ -1,3 +1,15 @@
+echo "test_plain_key" | base64
+
 curl -X POST http://localhost:1323/wrapKey \
   -H 'Content-Type: application/json' \
-  -d '{"table":"aaa.bbb","column":"ccc","footer":false,"plain_key":"sample_plain_key"}'
+  -d '{"token":"test_token","table":"test_db.test_table","column":"test_column","plain_key":"dGVzdF9wbGFpbl9rZXkK"}'
+
+{"code":0,"wrapped_key":"GhglzD6nLX6ZBUr2TeQuxdn8V95uJdpSPVLVgqR9SAgS/zwnwuVxNefTwA=="}
+
+curl -X POST http://localhost:1323/unwrapKey \
+  -H 'Content-Type: application/json' \
+  -d '{"token":"test_token","table":"test_db.test_table","column":"test_column","wrapped_key":"GhglzD6nLX6ZBUr2TeQuxdn8V95uJdpSPVLVgqR9SAgS/zwnwuVxNefTwA=="}'
+
+{"code":0,"plain_key":"dGVzdF9wbGFpbl9rZXkK"}
+
+echo "dGVzdF9wbGFpbl9rZXkK" | base64 -d
